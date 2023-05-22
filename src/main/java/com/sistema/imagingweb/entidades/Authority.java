@@ -4,7 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 public class Authority implements GrantedAuthority {
 
-    private  String authority;
+    private String authority;
 
     public Authority(String authority) {
         this.authority = authority;
@@ -14,4 +14,5 @@ public class Authority implements GrantedAuthority {
     public String getAuthority() {
         return this.authority;
     }
+
 }

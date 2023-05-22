@@ -1,5 +1,6 @@
 package com.sistema.imagingweb.controllers;
 
+
 import com.sistema.imagingweb.entidades.Rol;
 import com.sistema.imagingweb.entidades.Usuario;
 import com.sistema.imagingweb.entidades.UsuarioRol;
@@ -14,6 +15,7 @@ import java.util.Set;
 @RequestMapping("/usuarios")
 @CrossOrigin("*")
 public class UsuarioController {
+
     @Autowired
     private UsuarioService usuarioService;
 
@@ -24,24 +26,25 @@ public class UsuarioController {
 
         Rol rol = new Rol();
         rol.setRolId(2L);
-        rol.setNombre("INVITADO");
+        rol.setRolNombre("INVITADO");
 
         UsuarioRol usuarioRol = new UsuarioRol();
         usuarioRol.setUsuario(usuario);
         usuarioRol.setRol(rol);
 
         usuarioRoles.add(usuarioRol);
-        return  usuarioService.guardarUsuario(usuario,usuarioRoles);
+        return usuarioService.guardarUsuario(usuario,usuarioRoles);
     }
+
 
     @GetMapping("/{username}")
     public Usuario obtenerUsuario(@PathVariable("username") String username){
-        return usuarioService.obetenerUsuario(username);
+        return usuarioService.obtenerUsuario(username);
     }
 
     @DeleteMapping("/{usuarioId}")
     public void eliminarUsuario(@PathVariable("usuarioId") Long usuarioId){
         usuarioService.eliminarUsuario(usuarioId);
-
     }
+
 }

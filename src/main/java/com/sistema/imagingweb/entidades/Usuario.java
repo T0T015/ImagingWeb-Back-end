@@ -12,18 +12,33 @@ import java.util.Set;
 @Entity
 @Table(name = "usuarios")
 public class Usuario implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String username;
     private String password;
     private String email;
-    private boolean enable = true;
+    private boolean enabled = true;
     private String perfil;
+
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "usuario")
     @JsonIgnore
-
     private Set<UsuarioRol> usuarioRoles = new HashSet<>();
+
+    public Usuario(){
+
+    }
+
+    public Usuario(Long id, String username, String password, String email, boolean enabled, String perfil) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.enabled = enabled;
+        this.perfil = perfil;
+    }
 
     public Long getId() {
         return id;
@@ -52,11 +67,6 @@ public class Usuario implements UserDetails {
         return true;
     }
 
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -65,7 +75,7 @@ public class Usuario implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<Authority> autoridades = new HashSet<>();
         this.usuarioRoles.forEach(usuarioRol -> {
-            autoridades.add(new Authority(usuarioRol.getRol().getNombre()));
+            autoridades.add(new Authority(usuarioRol.getRol().getRolNombre()));
         });
         return autoridades;
     }
@@ -77,7 +87,6 @@ public class Usuario implements UserDetails {
     public void setPassword(String password) {
         this.password = password;
     }
-
     public String getEmail() {
         return email;
     }
@@ -86,12 +95,12 @@ public class Usuario implements UserDetails {
         this.email = email;
     }
 
-    public boolean isEnable() {
-        return enable;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setEnable(boolean enable) {
-        this.enable = enable;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public String getPerfil() {
@@ -108,8 +117,5 @@ public class Usuario implements UserDetails {
 
     public void setUsuarioRoles(Set<UsuarioRol> usuarioRoles) {
         this.usuarioRoles = usuarioRoles;
-    }
-    public Usuario(){
-
     }
 }
