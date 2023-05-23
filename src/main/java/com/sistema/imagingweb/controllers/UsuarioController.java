@@ -6,6 +6,7 @@ import com.sistema.imagingweb.entidades.Usuario;
 import com.sistema.imagingweb.entidades.UsuarioRol;
 import com.sistema.imagingweb.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -19,9 +20,14 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @PostMapping("/")
     public Usuario guardarUsuario(@RequestBody Usuario usuario) throws Exception{
         usuario.setPerfil("default.png");
+        usuario.setPassword(this.bCryptPasswordEncoder.encode(usuario.getPassword()));
+
         Set<UsuarioRol> usuarioRoles = new HashSet<>();
 
         Rol rol = new Rol();

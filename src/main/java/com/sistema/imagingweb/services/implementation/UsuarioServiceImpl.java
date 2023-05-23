@@ -2,6 +2,7 @@ package com.sistema.imagingweb.services.implementation;
 
 import com.sistema.imagingweb.entidades.Usuario;
 import com.sistema.imagingweb.entidades.UsuarioRol;
+import com.sistema.imagingweb.exepciones.UsuarioFoundException;
 import com.sistema.imagingweb.repositorios.RolRepository;
 import com.sistema.imagingweb.repositorios.UsuarioRepository;
 import com.sistema.imagingweb.services.UsuarioService;
@@ -24,7 +25,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         Usuario usuarioLocal = usuarioRepository.findByUsername(usuario.getUsername());
         if(usuarioLocal != null){
             System.out.println("El usuario ya existe");
-            throw new Exception("El usuario ya esta presente");
+            throw new UsuarioFoundException("El usuario ya esta presente");
         }
         else{
             for(UsuarioRol usuarioRol:usuarioRoles){

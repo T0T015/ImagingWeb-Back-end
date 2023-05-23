@@ -3,6 +3,7 @@ package com.sistema.imagingweb.controllers;
 import com.sistema.imagingweb.entidades.JwtRequest;
 import com.sistema.imagingweb.entidades.JwtResponse;
 import com.sistema.imagingweb.entidades.Usuario;
+import com.sistema.imagingweb.exepciones.UsuarioNotFoundException;
 import com.sistema.imagingweb.security.JwtUtils;
 import com.sistema.imagingweb.services.implementation.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class AuthenticationController {
     public ResponseEntity<?> generarToken(@RequestBody JwtRequest jwtRequest) throws Exception {
         try{
             autenticar(jwtRequest.getUsername(),jwtRequest.getPassword());
-        }catch (Exception exception){
+        }catch (UsuarioNotFoundException exception){
             exception.printStackTrace();
             throw new Exception("Usuario no encontrado");
         }
